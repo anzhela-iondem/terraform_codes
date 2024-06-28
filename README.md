@@ -22,14 +22,26 @@ This repository contains Terraform configurations to create and manage cloud inf
     cd terraform_codes
     ```
 
-2. **Create the VPC (network infrastructure) first:**
+2. **Create an S3 bucket for backend storage:**
+    Create an S3 bucket to store Terraform state files for security reasons. Configure the backend in each module's `main.tf` file.
+    ```hcl
+    terraform {
+      backend "s3" {
+        bucket = "your-terraform-state-bucket"
+        key    = "path/to/terraform.tfstate"
+        region = "your-region"
+      }
+    }
+    ```
+
+3. **Create the VPC (network infrastructure) first:**
     ```sh
     cd vpc
     terraform init
     terraform apply
     ```
 
-3. **Navigate to the desired resource directory and apply the configuration, e.g., for EKS:**
+4. **Navigate to the desired resource directory and apply the configuration, e.g., for EKS:**
     ```sh
     cd ../modul_eks
     terraform init
