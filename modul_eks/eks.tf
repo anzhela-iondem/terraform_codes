@@ -5,7 +5,7 @@ module "eks" {
   cluster_name    = var.eks_cluster_name
   cluster_version = "1.29"
 
-  cluster_endpoint_public_access  = true  #TODO change to private
+  cluster_endpoint_public_access  = false  
   
 
   cluster_addons = {
@@ -19,15 +19,11 @@ module "eks" {
       most_recent = true
     }
   }
-  subnet_ids = [local.public_subnets1_id, local.public_subnets2_id]
+  subnet_ids               = [local.private_subnets1_id, local.private_subnets2_id]
   vpc_id                   = local.project_vpc_id
  
   control_plane_subnet_ids = [local.private_subnets1_id, local.private_subnets2_id]
 
-  # EKS Managed Node Group(s)
-#   eks_managed_node_group_defaults = {
-#     instance_types = ["m6i.large", "m5.large", "m5n.large", "m5zn.large"]
-#   }
 
   eks_managed_node_groups = {
     
@@ -41,11 +37,6 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
   }
-
-  # Cluster access entry
-  # To add the current caller identity as an administrator
-  #enable_cluster_creator_admin_permissions = true
-
 
   enable_irsa = true
 
@@ -69,21 +60,4 @@ module "eks" {
       }
     }
   }
-
-  # tags = {
-  #   Environment = "default"
-  #   Terraform   = "true"
-  # }
 }
-
-
-
-########### Namespaces #############
-
-# # Create namespaces in kubernetes cluster
-# resource "kubernetes_namespace" "example" {
-
-#   metadata {
-#     name = var.namespaces
-#   }
-# }
