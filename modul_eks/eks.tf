@@ -5,7 +5,7 @@ module "eks" {
   cluster_name    = var.eks_cluster_name
   cluster_version = "1.29"
 
-  cluster_endpoint_public_access  = false  
+  cluster_endpoint_public_access  = true   # Change it to false if deploying for production environment  
   
 
   cluster_addons = {
