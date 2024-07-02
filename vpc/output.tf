@@ -19,21 +19,21 @@ output "public_subnet_2_id" {
 }
 
 output "private_subnet_1_id" {
-    description = "Public Subnet 1 ID"
+    description = "Privat Subnet 1 ID"
     value = aws_subnet.private_subnets[0].id
 }
 
 output "private_subnet_2_id" {
-    description = "Public Subnet 1 ID"
+    description = "Privat Subnet 1 ID"
     value = aws_subnet.private_subnets[1].id
 }
 
 output "database_subnet_1_id" {
-    description = "Public Subnet 1 ID"
+    description = "Database Subnet 1 ID"
     value = aws_subnet.database_subnets[0].id
 }
 
 output "database_subnet_2_id" {
-    description = "Public Subnet 1 ID"
+    description = "Database Subnet 1 ID"
     value = aws_subnet.database_subnets[1].id
 }

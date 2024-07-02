@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "image_ami" {
-    default = "ami-026c3177c9bd54288" # Ubutu 22.04
+    default = "ami-0fd3d9a52f5e08c9c" # Jenkins
 }
 
 variable "key_name" {

@@ -2,9 +2,13 @@ resource "aws_instance" "kubectl-server" {
   ami                         = var.image_ami
   key_name                    = var.key_name
   instance_type               = "t2.small"  # You may need bigger storage
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   subnet_id                   = local.private_subnets1_id  # Need a VPN server to access Jenkins.
   vpc_security_group_ids      = [aws_security_group.allow_tls_ssh.id]
+
+  root_block_device {
+    volume_size = 16
+  }
 
   tags = {
     Name = "jenkins_server_relq"
@@ -22,7 +26,7 @@ resource "aws_security_group" "allow_tls_ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.1.12/0"]  # Provide VPN server's local IP
+    cidr_blocks = ["10.0.1.0/24"]  # Provide VPN server's local IP
   }
 
   ingress {
@@ -30,7 +34,7 @@ resource "aws_security_group" "allow_tls_ssh" {
     from_port        = 8080
     to_port          = 8080
     protocol         = "tcp"
-    cidr_blocks      = ["10.0.1.12/0"]  # Provide VPN server's local IP
+    cidr_blocks      = ["10.0.1.0/24"]  # Provide VPN server's local IP
   }
 
   egress {
